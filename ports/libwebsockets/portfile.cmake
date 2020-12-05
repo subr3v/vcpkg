@@ -1,4 +1,4 @@
-vcpkg_fail_port_install(ON_ARCH "arm" ON_TARGET "uwp")
+vcpkg_fail_port_install(ON_TARGET "uwp")
 
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
@@ -20,7 +20,7 @@ string(COMPARE EQUAL "${VCPKG_LIBRARY_LINKAGE}" "dynamic" LWS_WITH_SHARED)
 # #
 # option(LWS_WITH_NETWORK "Compile with network-related code" ON)
 # option(LWS_ROLE_H1 "Compile with support for http/1 (needed for ws)" ON)
-# option(LWS_ROLE_WS "Compile with support for websockets" ON)
+option(LWS_ROLE_WS "Compile with support for websockets" ON)
 # option(LWS_ROLE_DBUS "Compile with support for DBUS" OFF)
 # option(LWS_ROLE_RAW_PROXY "Raw packet proxy" OFF)
 # option(LWS_WITH_HTTP2 "Compile with server support for HTTP/2" ON)
@@ -56,7 +56,7 @@ string(COMPARE EQUAL "${VCPKG_LIBRARY_LINKAGE}" "dynamic" LWS_WITH_SHARED)
 # # Event library options (may select multiple, or none for default poll()
 # #
 # option(LWS_WITH_LIBEV "Compile with support for libev" OFF)
-# option(LWS_WITH_LIBUV "Compile with support for libuv" OFF)
+option(LWS_WITH_LIBUV "Compile with support for libuv" ON)
 # option(LWS_WITH_LIBEVENT "Compile with support for libevent" OFF)
 # #
 # # Static / Dynamic build options
