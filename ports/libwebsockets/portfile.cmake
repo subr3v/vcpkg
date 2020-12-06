@@ -18,8 +18,8 @@ string(COMPARE EQUAL "${VCPKG_LIBRARY_LINKAGE}" "dynamic" LWS_WITH_SHARED)
 # #
 # # Major individual features
 # #
-# option(LWS_WITH_NETWORK "Compile with network-related code" ON)
-# option(LWS_ROLE_H1 "Compile with support for http/1 (needed for ws)" ON)
+option(LWS_WITH_NETWORK "Compile with network-related code" ON)
+option(LWS_ROLE_H1 "Compile with support for http/1 (needed for ws)" ON)
 option(LWS_ROLE_WS "Compile with support for websockets" ON)
 # option(LWS_ROLE_DBUS "Compile with support for DBUS" OFF)
 # option(LWS_ROLE_RAW_PROXY "Raw packet proxy" OFF)
@@ -84,7 +84,7 @@ option(LWS_WITH_LIBUV "Compile with support for libuv" ON)
 # #
 # # Extensions (permessage-deflate)
 # #
-# option(LWS_WITHOUT_EXTENSIONS "Don't compile with extensions" ON)
+option(LWS_WITHOUT_EXTENSIONS "Don't compile with extensions" OFF)
 # #
 # # Helpers + misc
 # #
@@ -131,6 +131,11 @@ option(LWS_WITH_LIBUV "Compile with support for libuv" ON)
 # option(LWS_WITH_LWS_DSH "Support lws_dsh_t Disordered Shared Heap" OFF)
 ##
 
+vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS
+    FEATURES extensionssupport LWS_ROLE_WS
+    INVERTED_FEATURES extensionssupport LWS_WITHOUT_EXTENSIONS
+)
+
 vcpkg_configure_cmake(
     SOURCE_PATH ${SOURCE_PATH}
     PREFER_NINJA
@@ -145,6 +150,7 @@ vcpkg_configure_cmake(
         -DLWS_WITH_HTTP2=ON
         -DLWS_WITH_HTTP_STREAM_COMPRESSION=ON # Since zlib is already a dependency
         -DLWS_WITH_LIBUV=ON
+        ${FEATURE_OPTIONS}
     # OPTIONS_RELEASE -DOPTIMIZE=1
     # OPTIONS_DEBUG -DDEBUGGABLE=1
 )
